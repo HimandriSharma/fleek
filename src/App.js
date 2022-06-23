@@ -1,9 +1,11 @@
-import './App.css';
+import "./App.css";
+import Character from "./pages/Character";
 
 function App() {
+  
   return (
     <div className="App">
-      hi there
+      <Character/>
     </div>
   );
 }
