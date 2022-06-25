@@ -1,9 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Card } from "antd";
+import { Card, Row, Col,Layout, Select, Menu, Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
 import backendService from "../api/BackendService";
 
-function Character() {
+const { Option } = Select;
+const { Sider } = Layout;
+
+const Character = () => {
   const [characters, setCharacters] = useState({});
   useEffect(() => {
     backendService
@@ -15,27 +20,105 @@ function Character() {
         console.log(err);
       });
   }, []);
+  const handleClick = () => {
+    console.log("clicked!");
+  };
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   return (
-    <div>
-      {characters.map &&
-        characters.map((item) => (
-          <Card
-            hoverable
+    <Layout>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        style={{
+          zIndex: "111",
+          position: "fixed",
+          height: "100%",
+        }}
+      >
+        <Menu theme="dark">
+          <Input
+            placeholder="Search across characters"
+            prefix={<SearchOutlined />}
+            style={{ margin: "10px", maxWidth: "fit-content" }}
+          />
+          <Select
+            defaultValue="Status"
             style={{
-              width: 240,
+              width: "90%",
+              height: "100%",
+              position: "relative",
+              margin: "10px",
             }}
-            cover={
-              <img
-                alt="example"
-                src={item.image}
-              />
-            }
+            onChange={handleChange}
+            listHeight={128}
           >
-            {item.name}
-          </Card>
-        ))}
-    </div>
+            <Option value="Unknown">Unknown</Option>
+            <Option value="Alive">Alive</Option>
+            <Option value="Dead">Dead</Option>
+          </Select>
+          <Select
+            defaultValue="Gender Filter "
+            style={{
+              width: "90%",
+              height: "100%",
+              position: "relative",
+              margin: "10px",
+            }}
+            onChange={handleChange}
+            listHeight={128}
+          >
+            <Option value="Unknown">Unknown</Option>
+            <Option value="Male">Male</Option>
+            <Option value="Female">Female</Option>
+          </Select>
+        </Menu>
+      </Sider>
+
+      <div
+        style={{
+          position: "absolute",
+          top: "100px",
+          left: "20vw",
+          zIndex: "0",
+        }}
+      >
+        <Row gutter={16}>
+          {characters.map &&
+            characters.map((item) => (
+              <Col xs={24} sm={12} md={8} key={item.id}>
+                <Card
+                  hoverable
+                  style={{
+                    width: "fit-content",
+                    height: "fit-content",
+                    margin: "10px",
+                    border: "solid",
+                    cursor: "pointer",
+                  }}
+                  bordered={true}
+                  cover={
+                    <img
+                      alt="example"
+                      src={item.image}
+                      style={{ padding: "10px" }}
+                    />
+                  }
+                  onClick={handleClick}
+                >
+                  <span style={{ padding: "1px" }}>
+                    <div style={{ fontSize: "1.5rem" }}>{item.name}</div>
+                    <div style={{ fontSize: "1.2rem" }}>{item.species}</div>
+                    <div style={{ fontSize: "1.2rem" }}>{item.status}</div>
+                  </span>
+                </Card>
+              </Col>
+            ))}
+        </Row>
+      </div>
+    </Layout>
   );
-}
+};
 
 export default Character;

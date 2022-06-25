@@ -1,0 +1,11 @@
+.card-style{
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    border: solid;
+    cursor: pointer;
+}
+.site-card-wrapper {
+    padding: 30px;
+    background: #ececec;
+  }
