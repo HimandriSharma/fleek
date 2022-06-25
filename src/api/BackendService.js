@@ -1,4 +1,4 @@
-import service from "./AppService";
+import {service, emptyService} from "./AppService";
 
 const backendService = {}
 
@@ -12,14 +12,14 @@ backendService.getCharacters = function (params) {
 
 backendService.getCharacterDetail = function (id) {
     return service({
-        url: '/character/2', //+id,
+        url: '/character/2',
         method: 'get',
     })
 }
 
-backendService.getEpisodeInfo = function () {
-    return service({
-        url: '/episode/1', //+id,
+backendService.getEpisodeInfo = function (url) {
+    return emptyService({
+        url,
         method: 'get',
     })
 }

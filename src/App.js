@@ -1,31 +1,19 @@
+import React from "react";
 import "./App.css";
-import Character from "./pages/Character";
-import headerLogo from "./assets/images/Rick-and-Morty.png";
-import { Layout } from "antd";
-import Detail from "./pages/Detail";
+import { Routes, Route } from "react-router-dom";
+import Character from "./components/Character";
+import Detail from "./components/Detail";
+import Navbar from "./components/Navbar";
 
-const { Header } = Layout;
 function App() {
   return (
-    <Layout style={{backgroundColor:"white",width:"100%",height:"100%"}}>
-      <Header
-        style={{
-          position: "fixed",
-          top: "0",
-          width: "100%",
-          height: "5rem",
-          backgroundColor: "#FFA900",
-          zIndex: "1",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        <img src={headerLogo} alt="Rick and Morty header logo" />
-      </Header>
-      <Detail/>
-      {/* <Character /> */}
-    </Layout>
+    <>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Character />} />
+        <Route exact path="/character/:id" element={<Detail />} />
+      </Routes>
+    </>
   );
 }
 

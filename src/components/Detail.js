@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import React, { useEffect, useState } from "react";
 import { Row, Col, Tabs } from "antd";
 import backendService from "../api/BackendService";
@@ -7,17 +8,26 @@ const { TabPane } = Tabs;
 const Detail = () => {
   const [details, setDetails] = useState({});
   const [episode, setEpisode] = useState({});
+  const [epurl, setEpurl] = useState("");
+  const [array, setArray] = useState([]);
   useEffect(() => {
     backendService
       .getCharacterDetail()
-      .then((res) => setDetails(res.data))
+      .then((res) => {
+        setDetails(res.data);
+        setEpurl(res.data.episode[0]);
+        setArray(res.data.episode);
+      })
       .catch((err) => console.log(err));
+  }, []);
+  useEffect(() => {
+    console.log(epurl);
     details &&
       backendService
-        .getEpisodeInfo()
+        .getEpisodeInfo(epurl)
         .then((res) => setEpisode(res.data))
         .catch((err) => console.log(err));
-  }, []);
+  }, [details, epurl]);
 
   return (
     <div style={{ marginTop: "100px", marginLeft: "30px" }}>
@@ -34,7 +44,6 @@ const Detail = () => {
             {details.id && (
               <div>
                 <b>ID:</b> {details.id}
-                {console.log(details)}
               </div>
             )}
             {details.name && (
@@ -80,8 +89,22 @@ const Detail = () => {
           </div>
           <br />
           {episode && (
-            <Tabs type="card" style={{ fontSize: "1.3rem",marginBottom:"30px" }}>
-              <TabPane tab="EP 1" key="1">
+            <Tabs
+              type="card"
+              style={{ fontSize: "1.3rem", marginBottom: "30px" }}
+              onChange={(key) => {
+                setEpurl(details.episode[key]);
+              }}
+            >
+              {[
+                ...Array.from(
+                  {
+                    length: array.length>=5?5:array.length,
+                  },
+                  (_, i) => i
+                ),
+              ].map((i) => (
+                <TabPane tab={"EP "+(i+1)} key={i}>
                 {episode.id && (
                   <div>
                     <b>Episode ID:</b> {episode.id}
@@ -103,12 +126,7 @@ const Detail = () => {
                   </div>
                 )}
               </TabPane>
-              <TabPane tab="EP 2" key="2">
-                Content of Episode Pane 2
-              </TabPane>
-              <TabPane tab="EP 3" key="3">
-                Content of Episode Pane 3
-              </TabPane>
+              ))}
             </Tabs>
           )}
         </Col>
@@ -118,8 +136,3 @@ const Detail = () => {
 };
 
 export default Detail;
-
-// Episode ID
-// ● Episode Nam
-// ● Episode Air Date
-// ● Episode.
