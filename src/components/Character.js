@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Card, Row, Col,Layout, Select, Menu, Input } from "antd";
+import { Card, Row, Col, Layout, Select, Menu, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import backendService from "../api/BackendService";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 const { Sider } = Layout;
@@ -20,12 +21,6 @@ const Character = () => {
         console.log(err);
       });
   }, []);
-  const handleClick = () => {
-    console.log("clicked!");
-  };
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
   return (
     <Layout>
       <Sider
@@ -51,7 +46,6 @@ const Character = () => {
               position: "relative",
               margin: "10px",
             }}
-            onChange={handleChange}
             listHeight={128}
           >
             <Option value="Unknown">Unknown</Option>
@@ -66,7 +60,6 @@ const Character = () => {
               position: "relative",
               margin: "10px",
             }}
-            onChange={handleChange}
             listHeight={128}
           >
             <Option value="Unknown">Unknown</Option>
@@ -88,31 +81,32 @@ const Character = () => {
           {characters.map &&
             characters.map((item) => (
               <Col xs={24} sm={12} md={8} key={item.id}>
-                <Card
-                  hoverable
-                  style={{
-                    width: "fit-content",
-                    height: "fit-content",
-                    margin: "10px",
-                    border: "solid",
-                    cursor: "pointer",
-                  }}
-                  bordered={true}
-                  cover={
-                    <img
-                      alt="example"
-                      src={item.image}
-                      style={{ padding: "10px" }}
-                    />
-                  }
-                  onClick={handleClick}
-                >
-                  <span style={{ padding: "1px" }}>
-                    <div style={{ fontSize: "1.5rem" }}>{item.name}</div>
-                    <div style={{ fontSize: "1.2rem" }}>{item.species}</div>
-                    <div style={{ fontSize: "1.2rem" }}>{item.status}</div>
-                  </span>
-                </Card>
+                <Link to={"/characters/"+item.id}>
+                  <Card
+                    hoverable
+                    style={{
+                      width: "fit-content",
+                      height: "fit-content",
+                      margin: "10px",
+                      border: "solid",
+                      cursor: "pointer",
+                    }}
+                    bordered={true}
+                    cover={
+                      <img
+                        alt="example"
+                        src={item.image}
+                        style={{ padding: "10px" }}
+                      />
+                    }
+                  >
+                    <span style={{ padding: "1px" }}>
+                      <div style={{ fontSize: "1.5rem" }}>{item.name}</div>
+                      <div style={{ fontSize: "1.2rem" }}>{item.species}</div>
+                      <div style={{ fontSize: "1.2rem" }}>{item.status}</div>
+                    </span>
+                  </Card>
+                </Link>
               </Col>
             ))}
         </Row>

@@ -12,7 +12,7 @@ backendService.getCharacters = function (params) {
 
 backendService.getCharacterDetail = function (id) {
     return service({
-        url: '/character/2',
+        url: '/character/'+id,
         method: 'get',
     })
 }

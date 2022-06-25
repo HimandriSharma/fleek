@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Tabs } from "antd";
 import backendService from "../api/BackendService";
+import { useParams } from "react-router-dom";
 
 const { TabPane } = Tabs;
 
@@ -10,18 +11,18 @@ const Detail = () => {
   const [episode, setEpisode] = useState({});
   const [epurl, setEpurl] = useState("");
   const [array, setArray] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
     backendService
-      .getCharacterDetail()
+      .getCharacterDetail(id)
       .then((res) => {
         setDetails(res.data);
         setEpurl(res.data.episode[0]);
         setArray(res.data.episode);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
   useEffect(() => {
-    console.log(epurl);
     details &&
       backendService
         .getEpisodeInfo(epurl)
@@ -99,33 +100,33 @@ const Detail = () => {
               {[
                 ...Array.from(
                   {
-                    length: array.length>=5?5:array.length,
+                    length: array.length >= 5 ? 5 : array.length,
                   },
                   (_, i) => i
                 ),
               ].map((i) => (
-                <TabPane tab={"EP "+(i+1)} key={i}>
-                {episode.id && (
-                  <div>
-                    <b>Episode ID:</b> {episode.id}
-                  </div>
-                )}
-                {episode.name && (
-                  <div>
-                    <b>Episode Name:</b> {episode.name}
-                  </div>
-                )}
-                {episode.air_date && (
-                  <div>
-                    <b>Episode AIR date:</b> {episode.air_date}
-                  </div>
-                )}
-                {episode.episode && (
-                  <div>
-                    <b>Episode:</b> {episode.episode}
-                  </div>
-                )}
-              </TabPane>
+                <TabPane tab={"EP " + (i + 1)} key={i}>
+                  {episode.id && (
+                    <div>
+                      <b>Episode ID:</b> {episode.id}
+                    </div>
+                  )}
+                  {episode.name && (
+                    <div>
+                      <b>Episode Name:</b> {episode.name}
+                    </div>
+                  )}
+                  {episode.air_date && (
+                    <div>
+                      <b>Episode AIR date:</b> {episode.air_date}
+                    </div>
+                  )}
+                  {episode.episode && (
+                    <div>
+                      <b>Episode:</b> {episode.episode}
+                    </div>
+                  )}
+                </TabPane>
               ))}
             </Tabs>
           )}

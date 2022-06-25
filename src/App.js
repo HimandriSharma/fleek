@@ -10,8 +10,9 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Character />} />
-        <Route exact path="/character/:id" element={<Detail />} />
+      <Route exact path="/" element={<Character/>} />
+        <Route exact path="/characters" element={<Character />} />
+        <Route exact path="/characters/:id" element={<Detail />} />
       </Routes>
     </>
   );
