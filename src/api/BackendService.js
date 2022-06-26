@@ -23,4 +23,12 @@ backendService.getEpisodeInfo = function (url) {
         method: 'get',
     })
 }
+
+backendService.getFilterCharacter = function (info) {
+    return service({
+        url: '/character/?name='+info.name+"&status="+info.status+"&gender="+info.gender,
+        method: 'get',
+    })
+}
+
 export default backendService
