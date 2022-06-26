@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import * as fromItems from './ducks/items';
-import ExampleControl from './ExampleControl';
+import PageControl from '../components/pagination/control';
 
 const mapStateToProps = state => ({
   itemsCurrentPage: fromItems.getItemsCurrentPage(state),
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
   fetchItems: fromItems.fetchItems,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExampleControl);
+export default connect(mapStateToProps, mapDispatchToProps)(PageControl);

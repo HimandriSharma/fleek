@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
+import Character from '../Character';
 import PageView from './pages/index';
 
 export default class PageControl extends Component {
@@ -9,6 +10,7 @@ export default class PageControl extends Component {
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
   }
+  
   handleNext() {
     const { fetchItems, itemsCurrentPage } = this.props;
     fetchItems(itemsCurrentPage + 1);
@@ -28,7 +30,7 @@ export default class PageControl extends Component {
     if (itemsRequested) return <div>Requested</div>;
     if (itemsErrored) return <div>Errored</div>;
     return (
-      <PageView
+      <Character
         onNext={this.handleNext}
         onPrevious={this.handlePrevious}
         itemsPaged={itemsPaged}

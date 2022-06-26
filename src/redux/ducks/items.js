@@ -36,6 +36,7 @@ const getItemsIdsPaged = (state) => {
 
 export const getItemsPaged = createSelector(
   [getItemsById, getItemsIdsPaged],
+  console.log(getItemsById),
   (pById, pIds) => pIds.map(o => pById[o]),
 );
 
@@ -79,11 +80,11 @@ export const fetchItems = page => (dispatch, getState) => {
   backendService.getCharacters(page)
     .then((response) => {
       dispatch(fetchItemsResponse({
-        items: response.results,
+        items: response.data.results,
         page,
       }));
     })
-    .catch(() => dispatch(fetchItemsResponse('500', true)));
+    .catch((err) => {dispatch(fetchItemsResponse('500', true));console.log(err);});
 };
 
 // REDUCER

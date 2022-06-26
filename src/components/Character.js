@@ -1,4 +1,5 @@
 import React from "react";
+import { PropTypes } from "prop-types";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -12,7 +13,6 @@ import {
   message,
   BackTop,
   Button,
-  Pagination
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
@@ -22,7 +22,13 @@ import { Link } from "react-router-dom";
 const { Option } = Select;
 const { Sider } = Layout;
 
-const Character = () => {
+const Character = ({
+  itemsCurrentPage,
+  itemsLastPage,
+  itemsPaged,
+  onNext,
+  onPrevious,
+}) => {
   const [characters, setCharacters] = useState({});
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
@@ -37,30 +43,24 @@ const Character = () => {
     setName(val);
   };
   useEffect(() => {
-    backendService
-      .getCharacters()
-      .then((res) => {
-        setCharacters(res.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    setCharacters(itemsPaged);
+  }, [itemsPaged]);
   useEffect(() => {
-    backendService
-      .getFilterCharacter({
-        name: name ? name : "",
-        status: status ? status : "",
-        gender: gender ? gender : "",
-      })
-      .then((res) => {
-        setCharacters(res.data.results);
-      })
-      .catch((err) => {
-        message.error({
-          content: "No Character with searched features exists.",
+    (name!=="" | status!=="" | gender!=="") &&
+      backendService
+        .getFilterCharacter({
+          name: name ? name : "",
+          status: status ? status : "",
+          gender: gender ? gender : "",
+        })
+        .then((res) => {
+          setCharacters(res.data.results);
+        })
+        .catch((err) => {
+          message.error({
+            content: "No Character with searched features exists.",
+          });
         });
-      });
   }, [name, status, gender]);
   return (
     <Layout>
@@ -138,8 +138,8 @@ const Character = () => {
                     height: "fit-content",
                     margin: "10px",
                     border: "solid",
-                    cursor:"default",
-                    minHeight:"30rem",
+                    cursor: "default",
+                    minHeight: "30rem",
                   }}
                   bordered={true}
                   cover={
@@ -165,7 +165,7 @@ const Character = () => {
                         color: "#fff",
                         textAlign: "center",
                         fontSize: 14,
-                        marginTop:"20px"
+                        marginTop: "20px",
                       }}
                     >
                       Details
@@ -194,11 +194,33 @@ const Character = () => {
           </BackTop>
         </Row>
         <Row>
-        <Pagination defaultCurrent={1} total={50} pagesCount={1}/>
+          {itemsCurrentPage !== 1 && (
+            <button onClick={onPrevious} className="button">
+              Previous
+            </button>
+          )}
+          {itemsCurrentPage}
+          {itemsCurrentPage !== itemsLastPage && (
+            <button onClick={onNext} className="button">
+              Next
+            </button>
+          )}
         </Row>
       </div>
     </Layout>
   );
+};
+Character.propTypes = {
+  itemsCurrentPage: PropTypes.number.isRequired,
+  itemsLastPage: PropTypes.number.isRequired,
+  itemsPaged: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })
+  ).isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
 };
 
 export default Character;

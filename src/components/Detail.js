@@ -34,7 +34,7 @@ const Detail = () => {
   return (
     <>
       <div style={{ marginTop: "100px", marginLeft: "30px" }}>
-        <Row><Link to='/' style={{marginBottom:"20px"}}><Button icon={<ArrowLeftOutlined/>}>Back</Button></Link></Row>
+        <Row><Link to='/characters' style={{marginBottom:"20px"}}><Button icon={<ArrowLeftOutlined/>}>Back</Button></Link></Row>
         <Row gutter={16}>
           <Col xs={24} sm={12} md={10} key="1">
             <img
