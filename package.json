@@ -2,7 +2,7 @@
   "name": "fleek",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://himandrisharma.tk/fleek",
+  "homepage": "https://himandrisharma.github.io/fleek",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.2.1",
     "antd": "^4.21.3",
     "axios": "^0.27.2",
+    "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
