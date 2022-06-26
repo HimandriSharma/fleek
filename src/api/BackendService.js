@@ -2,9 +2,9 @@ import {service, emptyService} from "./AppService";
 
 const backendService = {}
 
-backendService.getCharacters = function (params) {
+backendService.getCharacters = function (id,params) {
     return service({
-        url: '/character',
+        url: '/character/?page='+id,
         method: 'get',
         params
     })

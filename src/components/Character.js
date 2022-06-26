@@ -1,6 +1,19 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Card, Row, Col, Layout, Select, Menu, Input, Tooltip, message } from "antd";
+import {
+  Card,
+  Row,
+  Col,
+  Layout,
+  Select,
+  Menu,
+  Input,
+  Tooltip,
+  message,
+  BackTop,
+  Button,
+  Pagination
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import backendService from "../api/BackendService";
@@ -45,7 +58,7 @@ const Character = () => {
       })
       .catch((err) => {
         message.error({
-          content:"No Character with searched features exists."
+          content: "No Character with searched features exists.",
         });
       });
   }, [name, status, gender]);
@@ -118,34 +131,70 @@ const Character = () => {
           {characters.map &&
             characters.map((item) => (
               <Col xs={24} sm={12} md={8} key={item.id}>
-                <Link to={"/characters/" + item.id}>
-                  <Card
-                    hoverable
-                    style={{
-                      width: "fit-content",
-                      height: "fit-content",
-                      margin: "10px",
-                      border: "solid",
-                      cursor: "pointer",
-                    }}
-                    bordered={true}
-                    cover={
-                      <img
-                        alt="example"
-                        src={item.image}
-                        style={{ padding: "10px" }}
-                      />
-                    }
-                  >
-                    <span style={{ padding: "1px" }}>
-                      <div style={{ fontSize: "1.5rem" }}>{item.name}</div>
-                      <div style={{ fontSize: "1.2rem" }}>{item.species}</div>
-                      <div style={{ fontSize: "1.2rem" }}>{item.status}</div>
-                    </span>
-                  </Card>
-                </Link>
+                <Card
+                  hoverable
+                  style={{
+                    width: "fit-content",
+                    height: "fit-content",
+                    margin: "10px",
+                    border: "solid",
+                    cursor:"default",
+                    minHeight:"30rem",
+                  }}
+                  bordered={true}
+                  cover={
+                    <img
+                      alt="example"
+                      src={item.image}
+                      style={{ padding: "10px" }}
+                    />
+                  }
+                >
+                  <span style={{ padding: "1px" }}>
+                    <div style={{ fontSize: "1.5rem" }}>{item.name}</div>
+                    <div style={{ fontSize: "1.2rem" }}>{item.species}</div>
+                    <div style={{ fontSize: "1.2rem" }}>{item.status}</div>
+                  </span>
+                  <Link to={"/characters/" + item.id}>
+                    <Button
+                      style={{
+                        width: "100%",
+                        lineHeight: "20px",
+                        borderRadius: 4,
+                        backgroundColor: "gray",
+                        color: "#fff",
+                        textAlign: "center",
+                        fontSize: 14,
+                        marginTop:"20px"
+                      }}
+                    >
+                      Details
+                    </Button>
+                  </Link>
+                </Card>
               </Col>
             ))}
+        </Row>
+        <Row>
+          <BackTop>
+            <div
+              style={{
+                height: 40,
+                width: 100,
+                lineHeight: "40px",
+                borderRadius: 4,
+                backgroundColor: "gray",
+                color: "#fff",
+                textAlign: "center",
+                fontSize: 14,
+              }}
+            >
+              Go Top
+            </div>
+          </BackTop>
+        </Row>
+        <Row>
+        <Pagination defaultCurrent={1} total={50} pagesCount={1}/>
         </Row>
       </div>
     </Layout>
