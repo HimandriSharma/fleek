@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Card, Row, Col, Layout, Select, Menu, Input } from "antd";
+import { Card, Row, Col, Layout, Select, Menu, Input, Tooltip, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import backendService from "../api/BackendService";
@@ -11,6 +11,18 @@ const { Sider } = Layout;
 
 const Character = () => {
   const [characters, setCharacters] = useState({});
+  const [name, setName] = useState("");
+  const [status, setStatus] = useState("");
+  const [gender, setGender] = useState("");
+  const handleStatus = (val) => {
+    setStatus(val);
+  };
+  const handleGender = (val) => {
+    setGender(val);
+  };
+  const handleInput = (val) => {
+    setName(val);
+  };
   useEffect(() => {
     backendService
       .getCharacters()
@@ -21,23 +33,42 @@ const Character = () => {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    backendService
+      .getFilterCharacter({
+        name: name ? name : "",
+        status: status ? status : "",
+        gender: gender ? gender : "",
+      })
+      .then((res) => {
+        setCharacters(res.data.results);
+      })
+      .catch((err) => {
+        message.error({
+          content:"No Character with searched features exists."
+        });
+      });
+  }, [name, status, gender]);
   return (
     <Layout>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
         style={{
-          zIndex: "111",
+          zIndex: "1",
           position: "fixed",
           height: "100%",
         }}
       >
         <Menu theme="dark">
-          <Input
-            placeholder="Search across characters"
-            prefix={<SearchOutlined />}
-            style={{ margin: "10px", maxWidth: "fit-content" }}
-          />
+          <Tooltip title="Press ENTER after typing name." placement="rightTop">
+            <Input
+              placeholder="Type name here"
+              prefix={<SearchOutlined />}
+              style={{ margin: "10px", maxWidth: "fit-content" }}
+              onPressEnter={(e) => handleInput(e.target.value)}
+            />
+          </Tooltip>
           <Select
             defaultValue="Status"
             style={{
@@ -47,10 +78,13 @@ const Character = () => {
               margin: "10px",
             }}
             listHeight={128}
+            onChange={(val) => {
+              handleStatus(val);
+            }}
           >
-            <Option value="Unknown">Unknown</Option>
-            <Option value="Alive">Alive</Option>
-            <Option value="Dead">Dead</Option>
+            <Option value="unknown">Unknown</Option>
+            <Option value="alive">Alive</Option>
+            <Option value="dead">Dead</Option>
           </Select>
           <Select
             defaultValue="Gender Filter "
@@ -61,10 +95,13 @@ const Character = () => {
               margin: "10px",
             }}
             listHeight={128}
+            onChange={(val) => {
+              handleGender(val);
+            }}
           >
-            <Option value="Unknown">Unknown</Option>
-            <Option value="Male">Male</Option>
-            <Option value="Female">Female</Option>
+            <Option value="unknown">Unknown</Option>
+            <Option value="male">Male</Option>
+            <Option value="female">Female</Option>
           </Select>
         </Menu>
       </Sider>
@@ -81,7 +118,7 @@ const Character = () => {
           {characters.map &&
             characters.map((item) => (
               <Col xs={24} sm={12} md={8} key={item.id}>
-                <Link to={"/characters/"+item.id}>
+                <Link to={"/characters/" + item.id}>
                   <Card
                     hoverable
                     style={{
