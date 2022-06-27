@@ -1,4 +1,5 @@
 # Fleek Web application - Rick and Morty
 
-Running scripts as of now : 
+Running scripts : 
         yarn start
+        
