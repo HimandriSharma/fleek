@@ -14,6 +14,7 @@ import {
   BackTop,
   Button,
 } from "antd";
+import classnames from "classnames";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import backendService from "../api/BackendService";
@@ -33,6 +34,7 @@ const Character = ({
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
   const [gender, setGender] = useState("");
+  const [broken,setBroken] = useState(true);
   const handleStatus = (val) => {
     setStatus(val);
   };
@@ -41,6 +43,9 @@ const Character = ({
   };
   const handleInput = (val) => {
     setName(val);
+  };
+  const handleBreak= (val) => {
+    setBroken(val);
   };
   useEffect(() => {
     setCharacters(itemsPaged);
@@ -72,6 +77,7 @@ const Character = ({
           position: "fixed",
           height: "100%",
         }}
+        onBreakpoint = {(broken)=>{handleBreak(broken)}}
       >
         <Menu theme="dark">
           <Tooltip title="Press ENTER after typing name." placement="rightTop">
@@ -120,12 +126,10 @@ const Character = ({
       </Sider>
 
       <div
-        style={{
-          position: "absolute",
-          top: "100px",
-          left: "20vw",
-          zIndex: "0",
-        }}
+        className={classnames({
+            'sider-open' : !broken,
+            'sider-close' : broken
+        })}
       >
         <Row gutter={16}>
           {characters.map &&

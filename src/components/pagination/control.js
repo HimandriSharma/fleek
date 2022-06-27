@@ -1,7 +1,6 @@
 import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
 import Character from '../Character';
-import PageView from './pages/index';
 
 export default class PageControl extends Component {
   componentDidMount() {

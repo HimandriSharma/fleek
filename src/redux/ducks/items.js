@@ -36,7 +36,6 @@ const getItemsIdsPaged = (state) => {
 
 export const getItemsPaged = createSelector(
   [getItemsById, getItemsIdsPaged],
-  console.log(getItemsById),
   (pById, pIds) => pIds.map(o => pById[o]),
 );
 
