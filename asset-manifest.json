@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/fleek/static/css/main.c30862bb.css",
-    "main.js": "/fleek/static/js/main.15d8086f.js",
+    "main.css": "/fleek/static/css/main.699dba23.css",
+    "main.js": "/fleek/static/js/main.cfc79cac.js",
     "static/media/Rick-and-Morty.png": "/fleek/static/media/Rick-and-Morty.7c6bc53e5d236db70322.png",
     "index.html": "/fleek/index.html",
-    "main.c30862bb.css.map": "/fleek/static/css/main.c30862bb.css.map",
-    "main.15d8086f.js.map": "/fleek/static/js/main.15d8086f.js.map"
+    "main.699dba23.css.map": "/fleek/static/css/main.699dba23.css.map",
+    "main.cfc79cac.js.map": "/fleek/static/js/main.cfc79cac.js.map"
   },
   "entrypoints": [
-    "static/css/main.c30862bb.css",
-    "static/js/main.15d8086f.js"
+    "static/css/main.699dba23.css",
+    "static/js/main.cfc79cac.js"
   ]
 }
