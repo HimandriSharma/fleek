@@ -187,6 +187,8 @@ const Character = ({
                 color: "#fff",
                 textAlign: "center",
                 fontSize: 14,
+                position:"fixed",
+                left:"15rem"
               }}
             >
               Go Top
